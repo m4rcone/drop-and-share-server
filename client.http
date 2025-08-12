@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3000
+
+# @name check-health
+GET {{baseUrl}}/health
+
+###
+
+# @name upload-image
+POST {{baseUrl}}/upload
+Content-Type: multipart/form-data
