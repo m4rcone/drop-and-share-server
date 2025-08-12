@@ -1,6 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod/v4";
 import { ValidationError } from "../../infra/errors.js";
+import { UploadImage } from "../../services/upload-image.js";
 
 export const uploadImageRoute: FastifyPluginAsyncZod = async (app) => {
   app.post(
@@ -33,9 +34,23 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (app) => {
           },
         });
 
-        // upload da imagem
+        if (!uploadFile) {
+          throw new ValidationError({
+            message: "Arquivo não enviado na requisição.",
+          });
+        }
 
-        const response = { message: "", url: "", status_code: 201 };
+        const result = await UploadImage({
+          fileName: uploadFile.filename,
+          contentType: uploadFile.mimetype,
+          contentStream: uploadFile.file,
+        });
+
+        const response = {
+          message: "Upload realizado com sucesso.",
+          url: result.url,
+          status_code: 201,
+        };
 
         return res.status(201).send(response);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
