@@ -2,6 +2,7 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod/v4";
 import { ValidationError } from "../../infra/errors.js";
 import { UploadImage } from "../../services/upload-image.js";
+import { PassThrough } from "node:stream";
 
 export const uploadImageRoute: FastifyPluginAsyncZod = async (app) => {
   app.post(
@@ -15,52 +16,46 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async (app) => {
             url: z.string(),
             status_code: z.number(),
           }),
-          400: z.object({
-            name: z.string(),
-            message: z.string(),
-            action: z.string(),
-            status_code: z.number(),
-          }),
         },
       },
     },
     async (req, res) => {
-      const maxFileSize = 1024 * 1024 * 2; // 2MB
+      const file = await req.file();
 
-      try {
-        const uploadFile = await req.file({
-          limits: {
-            fileSize: maxFileSize,
-          },
+      if (!file) {
+        throw new ValidationError({
+          message: "Arquivo não enviado na requisição.",
         });
-
-        if (!uploadFile) {
-          throw new ValidationError({
-            message: "Arquivo não enviado na requisição.",
-          });
-        }
-
-        const result = await UploadImage({
-          fileName: uploadFile.filename,
-          contentType: uploadFile.mimetype,
-          contentStream: uploadFile.file,
-        });
-
-        const response = {
-          message: "Upload realizado com sucesso.",
-          url: result.url,
-          status_code: 201,
-        };
-
-        return res.status(201).send(response);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        if (error.message?.includes("Boundary not found")) {
-          throw new ValidationError({
-            message: "Arquivo não enviado na requisição.",
-          });
-        }
       }
-    }
+
+      // Interrompe o upload no R2 e lança um erro no processo (await upload.done()) caso exceda o tamanho de arquivo permitido.
+      const src = file.file;
+      const pass = new PassThrough();
+      let tooLargeErr: Error | null = null;
+
+      src.on("limit", () => {
+        tooLargeErr = new ValidationError({
+          message: "Tamanho do arquivo excedeu o limite permitido.",
+        });
+
+        pass.destroy(tooLargeErr);
+      });
+
+      src.pipe(pass);
+
+      const result = await UploadImage({
+        fileName: file.filename,
+        contentType: file.mimetype,
+        contentStream: pass,
+      });
+
+      const response = {
+        message: "Upload concluído com sucesso.",
+        url: result.url,
+        status_code: 201,
+      };
+
+      return res.status(201).send(response);
+    },
   );
 };

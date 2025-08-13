@@ -17,7 +17,6 @@ export async function uploadImageToStorage(input: UploadImageToStorageSchema) {
   const { fileName, contentType, contentStream } =
     uploadImageToStorageSchema.parse(input);
 
-  // Remove caracteres especiais
   const fileExtension = extname(fileName);
   const fileNameWithoutExtension = basename(fileName, fileExtension);
   const cleanedFileName = fileNameWithoutExtension.replace(/[^a-zA-Z0-9]/g, "");

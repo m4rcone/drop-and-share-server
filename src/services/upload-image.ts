@@ -21,23 +21,15 @@ export async function UploadImage(input: UploadImageSchema) {
 
   if (!allowedMimeTypes.includes(contentType)) {
     throw new ValidationError({
-      message:
-        "Tipo de arquivo inválido. Tipos permitidos: jpeg, jpg, png e webp.",
-      action: "Verifique o tipo de arquivo enviado.",
+      message: "Tipo de arquivo não permitido.",
     });
   }
 
-  let result;
-  try {
-    result = await uploadImageToStorage({
-      fileName,
-      contentType,
-      contentStream,
-    });
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error uploading image to storage.");
-  }
+  const result = await uploadImageToStorage({
+    fileName,
+    contentType,
+    contentStream,
+  });
 
   await db.insert(uploads).values({
     fileName,

@@ -10,6 +10,8 @@
     "database:generate": "drizzle-kit generate",
     "database:migrate": "drizzle-kit migrate",
     "database:studio": "drizzle-kit studio",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "lint:eslint:check": "eslint .",
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write ."
@@ -20,18 +22,20 @@
   "type": "module",
   "description": "",
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
+    "@eslint/js": "9.33.0",
+    "@types/jest": "30.0.0",
     "@types/node": "24.2.1",
     "@types/pg": "8.15.5",
     "drizzle-kit": "0.31.4",
-    "eslint": "^9.33.0",
-    "globals": "^16.3.0",
-    "jiti": "^2.5.1",
+    "eslint": "9.33.0",
+    "globals": "16.3.0",
+    "jest": "30.0.5",
+    "jiti": "2.5.1",
     "prettier": "3.6.2",
     "ts-node": "10.9.2",
     "tsx": "4.20.4",
     "typescript": "5.9.2",
-    "typescript-eslint": "^8.39.1"
+    "typescript-eslint": "8.39.1"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.864.0",
