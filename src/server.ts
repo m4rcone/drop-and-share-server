@@ -35,5 +35,5 @@ app.get("/health", (_req, res) => {
 app.register(uploadImageRoute);
 
 app.listen({ port }, () => {
-  console.log(styleText(["green"], `App running on port ${port}...`));
+  console.log(styleText(["green"], `\nApp running on port ${port}...`));
 });
