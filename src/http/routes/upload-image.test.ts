@@ -1,3 +1,9 @@
+import orchestrator from "../../tests/orchestrator.js";
+
+beforeAll(async () => {
+  await orchestrator.waitForAllServices();
+});
+
 describe("POST /upload", () => {
   test("Without any file", async () => {
     const response = await fetch("http://localhost:3000/upload", {
