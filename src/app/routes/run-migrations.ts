@@ -1,5 +1,5 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { runMigrationsController } from "../controllers/run-migrations.controller.ts";
+import { runMigrationsController } from "../controllers/run-migrations.controller.js";
 import z from "zod";
 
 export const runMigrationsRoute: FastifyPluginAsyncZod = async (app) => {

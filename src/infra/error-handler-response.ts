@@ -3,7 +3,7 @@ import {
   InternalServerError,
   UnauthorizedError,
   ValidationError,
-} from "./errors.ts";
+} from "./errors.js";
 
 export async function errorHandlerResponse(
   error: FastifyError,

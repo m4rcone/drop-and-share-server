@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
-import { UnauthorizedError } from "../../infra/errors.ts";
-import { runMigrationsService } from "../services/run-migrations.service.ts";
+import { UnauthorizedError } from "../../infra/errors.js";
+import { runMigrationsService } from "../services/run-migrations.service.js";
 
 export async function runMigrationsController(
   req: FastifyRequest,

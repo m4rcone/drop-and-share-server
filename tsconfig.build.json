@@ -3,7 +3,7 @@
     "module": "nodenext",
     "target": "es2022",
     "types": ["node"],
-    "outDir": "./dist",
+    "outDir": "./public",
 
     "strict": true,
     "esModuleInterop": true,
