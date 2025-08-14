@@ -1,4 +1,4 @@
-import orchestrator from "../orchestrator.js";
+import orchestrator from "../orchestrator.ts";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -6,7 +6,7 @@ beforeAll(async () => {
 
 describe("POST /migrations", () => {
   test("With valid migration secret", async () => {
-    const response = await fetch("http://localhost:3000/migrations", {
+    const response = await fetch("http://localhost:80/migrations", {
       method: "POST",
       headers: {
         "migration-secret": process.env.MIGRATION_SECRET,
@@ -17,7 +17,7 @@ describe("POST /migrations", () => {
   });
 
   test("With invalid migration secret", async () => {
-    const response = await fetch("http://localhost:3000/migrations", {
+    const response = await fetch("http://localhost:80/migrations", {
       method: "POST",
       headers: {
         "migration-secret": "invalid-secret",
@@ -37,7 +37,7 @@ describe("POST /migrations", () => {
   });
 
   test("Without migration secret", async () => {
-    const response = await fetch("http://localhost:3000/migrations", {
+    const response = await fetch("http://localhost:80/migrations", {
       method: "POST",
     });
 

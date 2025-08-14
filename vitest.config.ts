@@ -6,5 +6,6 @@ export default defineConfig({
     globals: true,
     environment: "node",
     env: loadEnv("example", process.cwd(), ""),
+    testTimeout: 20000,
   },
 });

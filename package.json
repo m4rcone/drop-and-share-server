@@ -13,7 +13,7 @@
     "database:generate": "drizzle-kit generate",
     "database:migrate": "drizzle-kit migrate",
     "database:studio": "drizzle-kit studio",
-    "test": "npm run services:up && npm run services:wait:database && npm run database:migrate && concurrently --names Dev,Vitest --hide Dev --kill-others --success command-Vitest \"tsx watch --env-file=.env src/server.ts\" \"vitest run --reporter=verbose\"",
+    "test": "npm run services:up && npm run services:wait:database && npm run database:migrate && concurrently --names Dev,Vitest --kill-others --success command-Vitest \"tsx watch --env-file=.env src/server.ts\" \"vitest run --reporter=verbose\"",
     "test:watch": "vitest",
     "lint:eslint:check": "eslint .",
     "lint:prettier:check": "prettier --check .",

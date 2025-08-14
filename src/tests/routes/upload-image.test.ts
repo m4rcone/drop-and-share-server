@@ -6,7 +6,7 @@ beforeAll(async () => {
 
 describe("POST /upload", () => {
   test("Without any file", async () => {
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:80/upload", {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -34,7 +34,7 @@ describe("POST /upload", () => {
 
     formData.append("file", fakeFile);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:80/upload", {
       method: "POST",
       body: formData,
     });
@@ -63,7 +63,7 @@ describe("POST /upload", () => {
 
     formData.append("file", largeFile);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:80/upload", {
       method: "POST",
       body: formData,
     });
@@ -92,7 +92,7 @@ describe("POST /upload", () => {
 
     formData.append("file", largeFile);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:80/upload", {
       method: "POST",
       body: formData,
     });
