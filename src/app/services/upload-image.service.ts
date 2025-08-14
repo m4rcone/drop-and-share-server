@@ -1,23 +1,23 @@
 import { Readable } from "node:stream";
 import z from "zod";
-import { ValidationError } from "../infra/errors.js";
-import { uploadImageToStorage } from "../storage/upload-image-to-storage.js";
-import db from "../infra/database/database.js";
-import { uploads } from "../infra/database/schemas/uploads.js";
+import { ValidationError } from "../../infra/errors.ts";
+import { uploadImageToStorage } from "../storage/upload-image-to-storage.ts";
+import db from "../../infra/database/database.ts";
+import { uploads } from "../../infra/database/schemas/uploads.ts";
 
-const uploadImageSchema = z.object({
+const uploadImageServiceSchema = z.object({
   fileName: z.string(),
   contentType: z.string(),
   contentStream: z.instanceof(Readable),
 });
 
-type UploadImageSchema = z.input<typeof uploadImageSchema>;
+type UploadImageServiceSchema = z.input<typeof uploadImageServiceSchema>;
 
 const allowedMimeTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
 
-export async function UploadImage(input: UploadImageSchema) {
+export async function UploadImageService(input: UploadImageServiceSchema) {
   const { fileName, contentType, contentStream } =
-    uploadImageSchema.parse(input);
+    uploadImageServiceSchema.parse(input);
 
   if (!allowedMimeTypes.includes(contentType)) {
     throw new ValidationError({

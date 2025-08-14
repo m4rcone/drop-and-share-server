@@ -7,8 +7,8 @@ import {
 import { fastifyCors } from "@fastify/cors";
 import fastifyMultipart from "@fastify/multipart";
 import { styleText } from "node:util";
-import { uploadImageRoute } from "./http/routes/upload-image.js";
-import controller from "./infra/controller.js";
+import { uploadImageRoute } from "./app/routes/upload-image.ts";
+import { errorHandlerResponse } from "./infra/error-handler-response.ts";
 
 const port = Number(process.env.PORT) || 3000;
 
@@ -16,7 +16,7 @@ const app = Fastify().withTypeProvider<ZodTypeProvider>();
 
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
-app.setErrorHandler(controller.errorHandlerResponse);
+app.setErrorHandler(errorHandlerResponse);
 
 app.register(fastifyCors, {
   origin: "*",

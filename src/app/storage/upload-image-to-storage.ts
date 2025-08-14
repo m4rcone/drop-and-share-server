@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { basename, extname } from "node:path";
 import { Readable } from "node:stream";
 import z from "zod";
-import { r2Client } from "./client.js";
+import r2Client from "./r2-client.ts";
 
 const uploadImageToStorageSchema = z.object({
   fileName: z.string(),
