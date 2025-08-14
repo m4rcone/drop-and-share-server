@@ -4,8 +4,6 @@
     "module": "nodenext",
     "target": "es2022",
     "types": ["node", "vitest/globals"],
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
 
     "strict": true,
     "esModuleInterop": true,

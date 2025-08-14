@@ -1,9 +1,9 @@
 import { Readable } from "node:stream";
 import z from "zod";
-import { ValidationError } from "../../infra/errors.ts";
-import { uploadImageToStorage } from "../storage/upload-image-to-storage.ts";
-import db from "../../infra/database/database.ts";
-import { uploads } from "../../infra/database/schemas/uploads.ts";
+import { ValidationError } from "../../infra/errors.js";
+import { uploadImageToStorage } from "../storage/upload-image-to-storage.js";
+import db from "../../infra/database/database.js";
+import { uploads } from "../../infra/database/schemas/uploads.js";
 
 const uploadImageServiceSchema = z.object({
   fileName: z.string(),

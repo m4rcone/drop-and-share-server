@@ -8,11 +8,11 @@ import {
 import { fastifyCors } from "@fastify/cors";
 import fastifyMultipart from "@fastify/multipart";
 import { styleText } from "node:util";
-import { uploadImageRoute } from "./app/routes/upload-image.ts";
-import { errorHandlerResponse } from "./infra/error-handler-response.ts";
+import { uploadImageRoute } from "./app/routes/upload-image.js";
+import { errorHandlerResponse } from "./infra/error-handler-response.js";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
-import { runMigrationsRoute } from "./app/routes/run-migrations.ts";
+import { runMigrationsRoute } from "./app/routes/run-migrations.js";
 
 const port = Number(process.env.PORT) || 3000;
 const maxFileSize = 1024 * 1024 * 2; // 2MB

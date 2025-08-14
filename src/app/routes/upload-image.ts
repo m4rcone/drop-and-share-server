@@ -1,5 +1,5 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { uploadImageController } from "../controllers/upload-image.controller.ts";
+import { uploadImageController } from "../controllers/upload-image.controller.js";
 import z from "zod/v4";
 
 export const uploadImageRoute: FastifyPluginAsyncZod = async (app) => {

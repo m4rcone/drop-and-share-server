@@ -1,6 +1,6 @@
 import { PassThrough } from "node:stream";
-import { ValidationError } from "../../infra/errors.ts";
-import { UploadImageService } from "../services/upload-image.service.ts";
+import { ValidationError } from "../../infra/errors.js";
+import { UploadImageService } from "../services/upload-image.service.js";
 import type { FastifyReply, FastifyRequest } from "fastify";
 
 export async function uploadImageController(
