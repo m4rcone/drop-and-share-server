@@ -7,14 +7,14 @@ import {
 } from "fastify-type-provider-zod";
 import { fastifyCors } from "@fastify/cors";
 import fastifyMultipart from "@fastify/multipart";
-import { styleText } from "node:util";
+// import { styleText } from "node:util";
 import { uploadImageRoute } from "./app/routes/upload-image.js";
 import { errorHandlerResponse } from "./infra/error-handler-response.js";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { runMigrationsRoute } from "./app/routes/run-migrations.js";
 
-const port = Number(process.env.PORT) || 3000;
+// const port = Number(process.env.PORT) || 3000;
 const maxFileSize = 1024 * 1024 * 2; // 2MB
 
 const app = Fastify().withTypeProvider<ZodTypeProvider>();
@@ -74,6 +74,8 @@ app.get("/health", (_req, res) => {
 app.register(uploadImageRoute);
 app.register(runMigrationsRoute);
 
-app.listen({ port }, () => {
-  console.log(styleText(["green"], `\nApp running on port ${port}...`));
-});
+// app.listen({ port }, () => {
+//   console.log(styleText(["green"], `\nApp running on port ${port}...`));
+// });
+
+export default app;
