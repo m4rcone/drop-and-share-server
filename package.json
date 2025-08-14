@@ -4,6 +4,8 @@
   "main": "server.ts",
   "scripts": {
     "dev": "npm run services:up && npm run services:wait:database && npm run database:migrate && tsx watch --env-file=.env src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
     "services:up": "docker compose -f src/infra/compose.yaml up -d",
     "services:stop": "docker compose -f src/infra/compose.yaml stop",
     "services:down": "docker compose -f src/infra/compose.yaml down",

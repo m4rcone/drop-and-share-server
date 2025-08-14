@@ -1,12 +1,16 @@
 import type { FastifyError, FastifyRequest, FastifyReply } from "fastify";
-import { InternalServerError, ValidationError } from "./errors.ts";
+import {
+  InternalServerError,
+  UnauthorizedError,
+  ValidationError,
+} from "./errors.ts";
 
 export async function errorHandlerResponse(
   error: FastifyError,
   _req: FastifyRequest,
   res: FastifyReply,
 ) {
-  if (error instanceof ValidationError) {
+  if (error instanceof ValidationError || error instanceof UnauthorizedError) {
     return res.status(error.statusCode).send(error.toJSON());
   }
 
@@ -18,6 +22,14 @@ export async function errorHandlerResponse(
     return res
       .status(validationError.statusCode)
       .send(validationError.toJSON());
+  }
+
+  if (error.message?.includes("migration-secret")) {
+    const unauthorizedError = new UnauthorizedError({});
+
+    return res
+      .status(unauthorizedError.statusCode)
+      .send(unauthorizedError.toJSON());
   }
 
   const publicErrorObject = new InternalServerError({
