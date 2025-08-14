@@ -1,7 +1,7 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import "dotenv/config";
 
-export const r2Client = new S3Client({
+const r2Client = new S3Client({
   region: "auto",
   endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
   credentials: {
@@ -9,3 +9,5 @@ export const r2Client = new S3Client({
     secretAccessKey: process.env.CLOUDFLARE_SECRET_ACCESS_KEY_ID!,
   },
 });
+
+export default r2Client;

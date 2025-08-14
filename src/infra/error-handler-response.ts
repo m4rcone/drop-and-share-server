@@ -1,7 +1,7 @@
 import type { FastifyError, FastifyRequest, FastifyReply } from "fastify";
-import { InternalServerError, ValidationError } from "./errors.js";
+import { InternalServerError, ValidationError } from "./errors.ts";
 
-async function errorHandlerResponse(
+export async function errorHandlerResponse(
   error: FastifyError,
   _req: FastifyRequest,
   res: FastifyReply,
@@ -31,9 +31,3 @@ async function errorHandlerResponse(
     .status(publicErrorObject.statusCode)
     .send(publicErrorObject.toJSON());
 }
-
-const controller = {
-  errorHandlerResponse,
-};
-
-export default controller;
