@@ -8,7 +8,7 @@ import {
 export async function errorHandlerResponse(
   error: FastifyError,
   _req: FastifyRequest,
-  res: FastifyReply
+  res: FastifyReply,
 ) {
   if (error instanceof ValidationError || error instanceof UnauthorizedError) {
     return res.status(error.statusCode).send(error.toJSON());

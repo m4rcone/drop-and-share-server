@@ -31,7 +31,7 @@ describe("POST /migrations", () => {
     expect(responseBody).toEqual({
       name: "UnauthorizedError",
       message: "Requisição não autorizada.",
-      action: "Verifique se a autorização foi enviada e tente novamente.",
+      action: "Verifique sua autorização e tente novamente.",
       status_code: 401,
     });
   });
@@ -48,7 +48,7 @@ describe("POST /migrations", () => {
     expect(responseBody).toEqual({
       name: "UnauthorizedError",
       message: "Requisição não autorizada.",
-      action: "Verifique se a autorização foi enviada e tente novamente.",
+      action: "Verifique sua autorização e tente novamente.",
       status_code: 401,
     });
   });
