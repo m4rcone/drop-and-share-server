@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import {
+  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
   ZodTypeProvider,
@@ -9,8 +10,11 @@ import fastifyMultipart from "@fastify/multipart";
 import { styleText } from "node:util";
 import { uploadImageRoute } from "./app/routes/upload-image.ts";
 import { errorHandlerResponse } from "./infra/error-handler-response.ts";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 
 const port = Number(process.env.PORT) || 3000;
+const maxFileSize = 1024 * 1024 * 2; // 2MB
 
 const app = Fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -22,9 +26,43 @@ app.register(fastifyCors, {
   origin: "*",
 });
 
+app.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: "Drop & Share API",
+      description: "Image uploader.",
+      version: "1.0.0",
+    },
+  },
+  transform: (data) => {
+    const { schema, url } = jsonSchemaTransform(data);
+
+    if (schema.consumes?.includes("multipart/form-data")) {
+      if (!schema.body) {
+        schema.body = {
+          type: "object",
+          properties: {
+            image: {
+              type: "string",
+              format: "binary",
+              description: ".jpeg .jpg .png .gif .webp",
+            },
+          },
+        };
+      }
+    }
+
+    return { schema, url };
+  },
+});
+
+app.register(fastifySwaggerUi, {
+  routePrefix: "/docs",
+});
+
 app.register(fastifyMultipart, {
   limits: {
-    fileSize: 1024 * 1024 * 2, // 2MB
+    fileSize: maxFileSize,
   },
 });
 
