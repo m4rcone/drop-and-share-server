@@ -14,7 +14,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { runMigrationsRoute } from "./app/routes/run-migrations.js";
 
-const port = Number(process.env.PORT) || 3000;
+const port = Number(process.env.PORT) || 80;
 const maxFileSize = 1024 * 1024 * 2; // 2MB
 
 const app = Fastify().withTypeProvider<ZodTypeProvider>();
