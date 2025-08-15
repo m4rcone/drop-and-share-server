@@ -13,6 +13,7 @@ import { errorHandlerResponse } from "./infra/error-handler-response.js";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { runMigrationsRoute } from "./app/routes/run-migrations.js";
+import "dotenv";
 
 const port = Number(process.env.PORT) || 80;
 const maxFileSize = 1024 * 1024 * 2; // 2MB
