@@ -75,6 +75,6 @@ app.get("/health", (_req, res) => {
 app.register(uploadImageRoute);
 app.register(runMigrationsRoute);
 
-app.listen({ port }, () => {
+app.listen({ port, host: "0.0.0.0" }, () => {
   console.log(styleText(["green"], `\nApp running on port ${port}...`));
 });
