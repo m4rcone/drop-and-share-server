@@ -4,9 +4,9 @@ beforeAll(async () => {
   await orchestrator.waitForAllServices();
 });
 
-describe("POST /upload", () => {
+describe("POST /uploads", () => {
   test("Without any file", async () => {
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:3000/uploads", {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -34,7 +34,7 @@ describe("POST /upload", () => {
 
     formData.append("file", fakeFile);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:3000/uploads", {
       method: "POST",
       body: formData,
     });
@@ -63,7 +63,7 @@ describe("POST /upload", () => {
 
     formData.append("file", largeFile);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:3000/uploads", {
       method: "POST",
       body: formData,
     });
@@ -92,19 +92,23 @@ describe("POST /upload", () => {
 
     formData.append("file", largeFile);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("http://localhost:3000/uploads", {
       method: "POST",
       body: formData,
     });
 
     expect(response.status).toBe(201);
 
-    const responseBody = await response.json();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const responseBody = (await response.json()) as any;
 
     expect(responseBody).toEqual({
-      message: "Upload concluído com sucesso.",
-      url: expect.any(String),
-      status_code: 201,
+      id: responseBody.id,
+      file_name: responseBody.file_name,
+      remote_key: responseBody.remote_key,
+      remote_url: responseBody.remote_url,
+      created_at: responseBody.created_at,
+      expires_at: responseBody.expires_at,
     });
   });
 });

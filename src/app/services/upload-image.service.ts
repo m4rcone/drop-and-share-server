@@ -13,7 +13,9 @@ const uploadImageServiceSchema = z.object({
 
 type UploadImageServiceSchema = z.input<typeof uploadImageServiceSchema>;
 
-const allowedMimeTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
+const EXPIRATION_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 1; // 1 DAY
+
+const allowedMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
 
 export async function UploadImageService(input: UploadImageServiceSchema) {
   const { fileName, contentType, contentStream } =
@@ -25,19 +27,21 @@ export async function UploadImageService(input: UploadImageServiceSchema) {
     });
   }
 
-  const result = await uploadImageToStorage({
+  const resultStorage = await uploadImageToStorage({
     fileName,
     contentType,
     contentStream,
   });
 
-  await db.insert(uploads).values({
-    fileName,
-    remoteKey: result.key,
-    remoteUrl: result.url,
-  });
+  const result = await db
+    .insert(uploads)
+    .values({
+      fileName,
+      remoteKey: resultStorage.key,
+      remoteUrl: resultStorage.url,
+      expiresAt: new Date(Date.now() + EXPIRATION_IN_MILLISECONDS),
+    })
+    .returning();
 
-  return {
-    url: result.url,
-  };
+  return result[0];
 }
