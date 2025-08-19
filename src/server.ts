@@ -26,7 +26,7 @@ app.setValidatorCompiler(validatorCompiler);
 app.setErrorHandler(errorHandlerResponse);
 
 app.register(fastifyCors, {
-  origin: "*",
+  origin: "https://drop-and-share-app.vercel.app",
 });
 
 app.register(fastifySwagger, {
