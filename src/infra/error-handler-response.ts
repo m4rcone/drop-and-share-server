@@ -1,6 +1,7 @@
 import type { FastifyError, FastifyRequest, FastifyReply } from "fastify";
 import {
   InternalServerError,
+  NotFoundError,
   UnauthorizedError,
   ValidationError,
 } from "./errors.js";
@@ -10,7 +11,11 @@ export async function errorHandlerResponse(
   _req: FastifyRequest,
   res: FastifyReply,
 ) {
-  if (error instanceof ValidationError || error instanceof UnauthorizedError) {
+  if (
+    error instanceof ValidationError ||
+    error instanceof UnauthorizedError ||
+    error instanceof NotFoundError
+  ) {
     return res.status(error.statusCode).send(error.toJSON());
   }
 

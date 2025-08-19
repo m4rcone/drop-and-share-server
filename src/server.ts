@@ -14,6 +14,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { runMigrationsRoute } from "./app/routes/run-migrations.js";
 import "dotenv";
+import { getUploadRoute } from "./app/routes/get-upload.js";
 
 const port = Number(process.env.PORT) || 3000;
 const maxFileSize = 1024 * 1024 * 2; // 2MB
@@ -73,6 +74,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.register(uploadImageRoute);
+app.register(getUploadRoute);
 app.register(runMigrationsRoute);
 
 app.listen({ port, host: "0.0.0.0" }, () => {

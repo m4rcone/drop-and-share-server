@@ -37,8 +37,11 @@ export async function uploadImageController(
   });
 
   return res.status(201).send({
-    message: "Upload concluído com sucesso.",
-    url: result.url,
-    status_code: 201,
+    id: result.id,
+    file_name: result.fileName,
+    remote_key: result.remoteKey,
+    remote_url: result.remoteUrl,
+    created_at: result.createdAt,
+    expires_at: result.expiresAt,
   });
 }

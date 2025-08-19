@@ -9,4 +9,5 @@ export const uploads = pgTable("uploads", {
   remoteKey: text("remote_key").notNull(),
   remoteUrl: text("remote_url").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+  expiresAt: timestamp("expires_at").notNull(),
 });
