@@ -27,6 +27,7 @@ app.setErrorHandler(errorHandlerResponse);
 
 app.register(fastifyCors, {
   origin: "https://drop-and-share-app.vercel.app",
+  methods: ["POST", "GET"],
 });
 
 app.register(fastifySwagger, {
